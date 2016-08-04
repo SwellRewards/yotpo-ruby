@@ -88,7 +88,7 @@ module Yotpo
           since_updated_at: params[:since_updated_at],
           include_site_reviews: params[:include_site_reviews],
           deleted: params[:deleted],
-          user_reference: params[:user_reference]
+          user_reference: params[:user_reference],
           utoken: params[:utoken]
       }
       request.delete_if{|key,val| val.nil? }
