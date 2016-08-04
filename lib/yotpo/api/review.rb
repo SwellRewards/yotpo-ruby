@@ -63,5 +63,36 @@ module Yotpo
       request.delete_if{|key,val| val.nil? }
       get("/products/#{app_key}/#{sku}/reviews", request)
     end
+
+    #
+    # Gets all reviews
+    #
+    # @param [Hash] params
+    # @option params [String] :app_key the app key of the account for which the review is created
+    # @option params [Integer] :count the amount of reviews per page
+    # @option params [Integer] :page the page number
+    # @option params [String] :since_id the id from which to start retrieving reviews
+    # @option params [String] :since_date the earliest creation date from which to start retrieving reviews
+    # @option params [String] :since_updated_at the earliest update date to start retrieving reviews
+    # @option params [Boolean] :include_site_reviews include site reviews in the response
+    # @option params [Boolean] :deleted include deleted reviews in the response
+    # @option params [String] :user_reference the user reference to filter the reviews by
+    # @option params [String] :utoken the users utoken to get the reviews that are most relevant to that user
+    def get_all_reviews(params)
+      app_key = params[:app_key]
+      request = {
+          page: params[:page] || 1,
+          count: params[:per_page] || 5,
+          since_date: params[:since_date],
+          since_id: params[:since_id],
+          since_updated_at: params[:since_updated_at],
+          include_site_reviews: params[:include_site_reviews],
+          deleted: params[:deleted],
+          user_reference: params[:user_reference]
+          utoken: params[:utoken]
+      }
+      request.delete_if{|key,val| val.nil? }
+      get("/v1/apps/#{app_key}/reviews", request)
+    end
   end
 end
